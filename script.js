@@ -13,6 +13,39 @@ class Book {
   }
 }
 
+function createTable() {
+  const body = document.querySelector("tbody");
+  body.innerHTML = "";
+  const librarySize = myLibrary.length;
+  let data = null;
+  let row = null;
+  let index = null;
+  let propertyArray = [];
+  for (let i = 0; i < librarySize; i += 1) {
+    row = document.createElement("tr");
+    propertyArray = Object.values(myLibrary[i]);
+    for (let x = 0; x < propertyArray.length; x += 1) {
+      data = document.createElement("td");
+      data.textContent = propertyArray[x];
+      row.appendChild(data);
+    }
+    index = document.createElement("button");
+    index.textContent = "Remove Book";
+    index.className = "remove";
+    index.setAttribute("id", `${i}`);
+    row.appendChild(index);
+    body.appendChild(row);
+  }
+  const removeButtons = document.querySelectorAll(".remove");
+  removeButtons.forEach((removeButton) => {
+    removeButton.addEventListener("click", (e) => {
+      const number = e.target.id;
+      myLibrary.splice(e.target.id, 1);
+      createTable();
+    });
+  });
+}
+
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
@@ -24,25 +57,6 @@ const secondBook = new Book(
   223,
   true
 );
-
-function createTable() {
-  const body = document.querySelector("tbody");
-  body.innerHTML = "";
-  const librarySize = myLibrary.length;
-  let data = null;
-  let row = null;
-  let propertyArray = [];
-  for (let i = 0; i < librarySize; i += 1) {
-    row = document.createElement("tr");
-    propertyArray = Object.values(myLibrary[i]);
-    for (let x = 0; x < propertyArray.length - 1; x += 1) {
-      data = document.createElement("td");
-      data.textContent = propertyArray[x];
-      row.appendChild(data);
-    }
-    body.appendChild(row);
-  }
-}
 
 addBookToLibrary(firstBook);
 createTable();
