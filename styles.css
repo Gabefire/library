@@ -1,12 +1,53 @@
-html {
-  font-family: sans-serif;
+body {
+  background-color: rgb(66, 66, 66);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+
+header button {
+  height: 30px;
+  align-self: center;
+  font-family: inherit;
+}
+
+h1 {
+  color: white;
 }
 
 table {
-  border-collapse: collapse;
+  margin: auto;
+  border-radius: 10px;
+  border-spacing: 0;
   border: 2px solid rgb(200, 200, 200);
   letter-spacing: 1px;
   font-size: 0.8rem;
+}
+thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+tbody tr td:last-child button {
+  font-family: inherit;
+  height: 30px;
 }
 
 td,
@@ -16,19 +57,16 @@ th {
 }
 
 th {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(0, 0, 0);
+  color: white;
 }
 
 td {
   text-align: center;
 }
 
-tr:nth-child(even) td {
-  background-color: rgb(250, 250, 250);
-}
-
-tr:nth-child(odd) td {
-  background-color: rgb(245, 245, 245);
+tbody tr td {
+  background-color: white;
 }
 
 caption {
@@ -36,37 +74,34 @@ caption {
 }
 
 /* Pop up form */
-.open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
-}
 
 .form-popup {
   display: none;
   position: fixed;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form-container {
-  max-width: 300px;
+  max-width: 500px;
   padding: 10px;
-  background-color: white;
+  background-color: rgb(134, 133, 133);
+  color: white;
 }
 
 .form-container input[type="text"] {
-  width: 100%;
+  width: 450px;
   padding: 15px;
   margin: 5px 0 22px 0;
   border: none;
   background: #f1f1f1;
+  font-family: inherit;
+}
+
+.form-container input[type="checkbox"] {
+  padding: 15px;
+  margin: 5px 0 22px 0;
 }
 
 .form-container .btn {

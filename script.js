@@ -47,11 +47,13 @@ function createTable() {
       }
     }
 
+    data = document.createElement("td");
     index = document.createElement("button");
     index.textContent = "Remove Book";
     index.className = "remove";
     index.setAttribute("id", `button${i}`);
-    row.appendChild(index);
+    data.appendChild(index);
+    row.appendChild(data);
     body.appendChild(row);
   }
   const togglesRead = document.querySelectorAll(".toggle");
