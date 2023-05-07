@@ -17,45 +17,43 @@ function createTable() {
   const body = document.querySelector("tbody");
   body.innerHTML = "";
   const librarySize = myLibrary.length;
-  let data = null;
-  let row = null;
-  let index = null;
-  let input = null;
   let propertyArray = [];
+
   for (let i = 0; i < librarySize; i += 1) {
-    row = document.createElement("tr");
+    const tableRow = document.createElement("tr");
     propertyArray = Object.values(myLibrary[i]);
     for (let x = 0; x < propertyArray.length; x += 1) {
       if (x === 3) {
-        data = document.createElement("td");
-        input = document.createElement("input");
+        const tableCell = document.createElement("td");
+        const readToggle = document.createElement("input");
+        readToggle.className = "toggle";
+        readToggle.type = "checkbox";
         if (propertyArray[x]) {
-          input.checked = true;
-          data.style.backgroundColor = "green";
+          readToggle.checked = true;
+          tableCell.style.backgroundColor = "green";
         } else {
-          data.style.backgroundColor = "red";
+          tableCell.style.backgroundColor = "red";
         }
-        input.className = "toggle";
-        input.type = "checkbox";
-        input.setAttribute("id", `toggle${i}`);
-        data.appendChild(input);
-        row.appendChild(data);
+        readToggle.setAttribute("id", `toggle${i}`);
+        tableCell.appendChild(readToggle);
+        tableRow.appendChild(tableCell);
       } else {
-        data = document.createElement("td");
-        data.textContent = propertyArray[x];
-        row.appendChild(data);
+        const tableCell = document.createElement("td");
+        tableCell.textContent = propertyArray[x];
+        tableRow.appendChild(tableCell);
       }
     }
 
-    data = document.createElement("td");
-    index = document.createElement("button");
-    index.textContent = "Remove Book";
-    index.className = "remove";
-    index.setAttribute("id", `button${i}`);
-    data.appendChild(index);
-    row.appendChild(data);
-    body.appendChild(row);
+    const tableCell = document.createElement("td");
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove Book";
+    removeButton.className = "remove";
+    removeButton.setAttribute("id", `button${i}`);
+    tableCell.appendChild(removeButton);
+    tableRow.appendChild(tableCell);
+    body.appendChild(tableRow);
   }
+
   const togglesRead = document.querySelectorAll(".toggle");
   togglesRead.forEach((toggle) => {
     toggle.addEventListener("change", (e) => {
@@ -80,6 +78,7 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
+/* Default Books */
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
 const secondBook = new Book(
   "Harry Potter and the Philosopher's Stone",
@@ -92,7 +91,7 @@ addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);
 createTable();
 
-/* Forms */
+/* Form */
 const addBookButton = document.querySelector(".add-book");
 addBookButton.addEventListener("click", () => {
   document.getElementById("myForm").style.display = "block";
