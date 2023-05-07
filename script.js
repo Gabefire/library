@@ -20,27 +20,55 @@ function createTable() {
   let data = null;
   let row = null;
   let index = null;
+  let input = null;
   let propertyArray = [];
   for (let i = 0; i < librarySize; i += 1) {
     row = document.createElement("tr");
     propertyArray = Object.values(myLibrary[i]);
     for (let x = 0; x < propertyArray.length; x += 1) {
-      data = document.createElement("td");
-      data.textContent = propertyArray[x];
-      row.appendChild(data);
+      if (x === 3) {
+        data = document.createElement("td");
+        input = document.createElement("input");
+        if (propertyArray[x]) {
+          input.checked = true;
+          data.style.backgroundColor = "green";
+        } else {
+          data.style.backgroundColor = "red";
+        }
+        input.className = "toggle";
+        input.type = "checkbox";
+        input.setAttribute("id", `toggle${i}`);
+        data.appendChild(input);
+        row.appendChild(data);
+      } else {
+        data = document.createElement("td");
+        data.textContent = propertyArray[x];
+        row.appendChild(data);
+      }
     }
+
     index = document.createElement("button");
     index.textContent = "Remove Book";
     index.className = "remove";
-    index.setAttribute("id", `${i}`);
+    index.setAttribute("id", `button${i}`);
     row.appendChild(index);
     body.appendChild(row);
   }
+  const togglesRead = document.querySelectorAll(".toggle");
+  togglesRead.forEach((toggle) => {
+    toggle.addEventListener("change", (e) => {
+      const toggleState = e.target.checked;
+      const toggleNumber = e.target.id.slice(-1);
+      myLibrary[toggleNumber].read = toggleState;
+      createTable();
+    });
+  });
+
   const removeButtons = document.querySelectorAll(".remove");
   removeButtons.forEach((removeButton) => {
     removeButton.addEventListener("click", (e) => {
-      const number = e.target.id;
-      myLibrary.splice(e.target.id, 1);
+      const buttonNumber = e.target.id.slice(-1);
+      myLibrary.splice(buttonNumber, 1);
       createTable();
     });
   });
@@ -59,7 +87,6 @@ const secondBook = new Book(
 );
 
 addBookToLibrary(firstBook);
-createTable();
 addBookToLibrary(secondBook);
 createTable();
 
@@ -75,14 +102,16 @@ closeButton.addEventListener("click", () => {
 });
 
 const submitButton = document.querySelector(".submit");
+const myForm = document.querySelector(".form-container");
 submitButton.addEventListener("click", (event) => {
   event.preventDefault();
   const title = document.getElementById("book-name").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
-  const read = document.getElementById("read").value;
+  const read = document.getElementById("read").checked;
   const book = new Book(title, author, pages, read);
   addBookToLibrary(book);
   document.getElementById("myForm").style.display = "none";
+  myForm.reset();
   createTable();
 });
