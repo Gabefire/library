@@ -34,7 +34,7 @@ function createTable() {
         } else {
           tableCell.style.backgroundColor = "red";
         }
-        readToggle.setAttribute("id", `toggle${i}`);
+        readToggle.setAttribute("data-index", `${i}`);
         tableCell.appendChild(readToggle);
         tableRow.appendChild(tableCell);
       } else {
@@ -48,7 +48,7 @@ function createTable() {
     const removeButton = document.createElement("button");
     removeButton.textContent = "Remove Book";
     removeButton.className = "remove";
-    removeButton.setAttribute("id", `button${i}`);
+    removeButton.setAttribute("data-index", `${i}`);
     tableCell.appendChild(removeButton);
     tableRow.appendChild(tableCell);
     body.appendChild(tableRow);
@@ -58,7 +58,7 @@ function createTable() {
   togglesRead.forEach((toggle) => {
     toggle.addEventListener("change", (e) => {
       const toggleState = e.target.checked;
-      const toggleNumber = e.target.id.slice(-1);
+      const toggleNumber = e.target.dataset.id;
       myLibrary[toggleNumber].read = toggleState;
       createTable();
     });
@@ -67,7 +67,7 @@ function createTable() {
   const removeButtons = document.querySelectorAll(".remove");
   removeButtons.forEach((removeButton) => {
     removeButton.addEventListener("click", (e) => {
-      const buttonNumber = e.target.id.slice(-1);
+      const buttonNumber = e.target.dataset.index;
       myLibrary.splice(buttonNumber, 1);
       createTable();
     });
