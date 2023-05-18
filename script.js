@@ -91,6 +91,39 @@ addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);
 createTable();
 
+const titleForm = document.getElementById("book-name");
+const authorForm = document.getElementById("author");
+const pagesForm = document.getElementById("pages");
+const readForm = document.getElementById("read");
+
+titleForm.addEventListener("input", () => {
+  if (titleForm.validity.valid) {
+    titleForm.setCustomValidity("");
+  }
+});
+
+authorForm.addEventListener("input", () => {
+  if (titleForm.validity.valid) {
+    titleForm.setCustomValidity("");
+  }
+});
+
+pagesForm.addEventListener("input", () => {
+  if (titleForm.validity.valid) {
+    titleForm.setCustomValidity("");
+  }
+});
+
+function showError() {
+  if (titleForm.validity.valueMissing) {
+    titleForm.setCustomValidity("Please enter a title");
+  } else if (authorForm.validity.valueMissing) {
+    authorForm.setCustomValidity("Please enter a author name");
+  } else if (pagesForm.validity.valueMissing) {
+    pagesForm.setCustomValidity("Please enter a page number");
+  }
+}
+
 /* Form */
 const addBookButton = document.querySelector(".add-book");
 addBookButton.addEventListener("click", () => {
@@ -99,17 +132,32 @@ addBookButton.addEventListener("click", () => {
 
 const closeButton = document.querySelector(".cancel");
 closeButton.addEventListener("click", () => {
+  const myForm = document.querySelector(".form-container");
+  myForm.reset();
   document.getElementById("myForm").style.display = "none";
 });
 
 const submitButton = document.querySelector(".submit");
 const myForm = document.querySelector(".form-container");
 submitButton.addEventListener("click", (event) => {
+  titleForm.setCustomValidity("");
+  authorForm.setCustomValidity("");
+  pagesForm.setCustomValidity("");
+  if (
+    !titleForm.validity.valid ||
+    !authorForm.validity.valid ||
+    !pagesForm.validity.valid
+  ) {
+    showError();
+    return;
+  }
+
   event.preventDefault();
-  const title = document.getElementById("book-name").value;
-  const author = document.getElementById("author").value;
-  const pages = document.getElementById("pages").value;
-  const read = document.getElementById("read").checked;
+  const title = titleForm.value;
+  const author = authorForm.value;
+  const pages = pagesForm.value;
+  const read = readForm.checked;
+
   const book = new Book(title, author, pages, read);
   addBookToLibrary(book);
   document.getElementById("myForm").style.display = "none";
